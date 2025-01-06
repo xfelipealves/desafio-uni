@@ -32,3 +32,8 @@ Cada cargo deve possuir:
 
     Listar todos os colaboradores com suas informações (incluindo o nome do cargo e salário).
     Listar todos os cargos com a quantidade de colaboradores associados a cada um.
+
+
+### Pra rodar a aplicação
+
+    docker-compose up --build
