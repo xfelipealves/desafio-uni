@@ -1,0 +1,37 @@
+services:
+  db:
+    image: postgres:15
+    container_name: desafio_postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 12345
+      POSTGRES_DB: desafio_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    networks:
+      - desafio_network
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - DATABASE_URL=postgresql://postgres:12345@db:5432/desafio_db
+    depends_on:
+      - db
+    volumes:
+      - .:/usr/src/app
+    command: >
+      sh -c "npx prisma generate  && npm run dev"
+    networks:
+      - desafio_network
+
+volumes:
+  db_data:
+
+networks:
+  desafio_network:
